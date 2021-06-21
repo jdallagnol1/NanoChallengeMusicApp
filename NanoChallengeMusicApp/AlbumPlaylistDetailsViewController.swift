@@ -34,6 +34,7 @@ class AlbumPlaylistDetailsViewController: UIViewController, UITableViewDataSourc
         navigationItem.title = musicColection?.title
         
         songsLibraryTableView.dataSource = self
+
     }
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1

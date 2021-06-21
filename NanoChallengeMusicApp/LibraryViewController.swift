@@ -27,7 +27,8 @@ class LibraryViewController: UIViewController, UITableViewDataSource, UITableVie
         } catch {
             print(error)
         }
-
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         // Do any additional setup after loading the view.
     }
     
@@ -41,14 +42,15 @@ class LibraryViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "library-cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "library-cell", for: indexPath) as! LibrariesTableViewCell
         
         let typeLibrary = library?[indexPath.row].type.rawValue ?? ""
         let authorLibrary = library?[indexPath.row].mainPerson ?? ""
         
-        cell.textLabel?.text = library?[indexPath.row].title
-        cell.detailTextLabel?.text = "\(typeLibrary) · \(authorLibrary)"
-        
+        cell.libraryImageView.image = UIImage(named: "\(library?[indexPath.row].id ?? "")")
+        cell.titleLabel.text = library?[indexPath.row].title
+        cell.subtitleLabel.text = "\(typeLibrary) · \(authorLibrary)"
+
         return cell
     }
     

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LibraryViewController: UIViewController, UITableViewDataSource {
+class LibraryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     
     @IBOutlet weak var libraryTableView: UITableView!
@@ -18,14 +18,15 @@ class LibraryViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        libraryTableView.dataSource = self
+        libraryTableView.delegate = self
+        
         do {
             self.service = try MusicService()
             self.library = service?.loadLibrary()
         } catch {
             print(error)
         }
-        
-        libraryTableView.dataSource = self
 
         // Do any additional setup after loading the view.
     }
@@ -50,5 +51,15 @@ class LibraryViewController: UIViewController, UITableViewDataSource {
         
         return cell
     }
-
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "goToAlbumPlaylistDetails", sender: library?[indexPath.row])
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let albumPlaylistDetailsViewController = segue.destination as? AlbumPlaylistDetailsViewController else { return }
+        
+        albumPlaylistDetailsViewController.musicColection = sender as? MusicCollection
+    }
+    
 }

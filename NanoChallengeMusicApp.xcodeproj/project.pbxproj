@@ -16,6 +16,7 @@
 		C05F6270268101CC0047DBF2 /* MusicService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05F626F268101CC0047DBF2 /* MusicService.swift */; };
 		C05F6272268102EB0047DBF2 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = C05F6271268102EB0047DBF2 /* data.json */; };
 		C05F6274268106EA0047DBF2 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05F6273268106EA0047DBF2 /* LibraryViewController.swift */; };
+		C05F6276268117E80047DBF2 /* AlbumPlaylistDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05F6275268117E80047DBF2 /* AlbumPlaylistDetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		C05F626F268101CC0047DBF2 /* MusicService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicService.swift; sourceTree = "<group>"; };
 		C05F6271268102EB0047DBF2 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		C05F6273268106EA0047DBF2 /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
+		C05F6275268117E80047DBF2 /* AlbumPlaylistDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumPlaylistDetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 				C05F625F2680FD390047DBF2 /* ViewController.swift */,
 				C05F62612680FD390047DBF2 /* Main.storyboard */,
 				C05F6273268106EA0047DBF2 /* LibraryViewController.swift */,
+				C05F6275268117E80047DBF2 /* AlbumPlaylistDetailsViewController.swift */,
 				C05F626F268101CC0047DBF2 /* MusicService.swift */,
 				C05F6271268102EB0047DBF2 /* data.json */,
 				C05F62642680FD3B0047DBF2 /* Assets.xcassets */,
@@ -152,6 +155,7 @@
 				C05F625C2680FD390047DBF2 /* AppDelegate.swift in Sources */,
 				C05F625E2680FD390047DBF2 /* SceneDelegate.swift in Sources */,
 				C05F6270268101CC0047DBF2 /* MusicService.swift in Sources */,
+				C05F6276268117E80047DBF2 /* AlbumPlaylistDetailsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

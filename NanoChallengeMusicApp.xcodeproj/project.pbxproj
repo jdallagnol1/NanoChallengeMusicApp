@@ -18,6 +18,7 @@
 		C05F6274268106EA0047DBF2 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05F6273268106EA0047DBF2 /* LibraryViewController.swift */; };
 		C05F6276268117E80047DBF2 /* AlbumPlaylistDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05F6275268117E80047DBF2 /* AlbumPlaylistDetailsViewController.swift */; };
 		C05F6278268136730047DBF2 /* LibrariesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05F6277268136730047DBF2 /* LibrariesTableViewCell.swift */; };
+		DAC81151268253E6006EAC0A /* MusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC81150268253E6006EAC0A /* MusicTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		C05F6273268106EA0047DBF2 /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
 		C05F6275268117E80047DBF2 /* AlbumPlaylistDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumPlaylistDetailsViewController.swift; sourceTree = "<group>"; };
 		C05F6277268136730047DBF2 /* LibrariesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibrariesTableViewCell.swift; sourceTree = "<group>"; };
+		DAC81150268253E6006EAC0A /* MusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 				C05F625F2680FD390047DBF2 /* ViewController.swift */,
 				C05F62612680FD390047DBF2 /* Main.storyboard */,
 				C05F6277268136730047DBF2 /* LibrariesTableViewCell.swift */,
+				DAC81150268253E6006EAC0A /* MusicTableViewCell.swift */,
 				C05F6273268106EA0047DBF2 /* LibraryViewController.swift */,
 				C05F6275268117E80047DBF2 /* AlbumPlaylistDetailsViewController.swift */,
 				C05F626F268101CC0047DBF2 /* MusicService.swift */,
@@ -160,6 +163,7 @@
 				C05F625E2680FD390047DBF2 /* SceneDelegate.swift in Sources */,
 				C05F6270268101CC0047DBF2 /* MusicService.swift in Sources */,
 				C05F6276268117E80047DBF2 /* AlbumPlaylistDetailsViewController.swift in Sources */,
+				DAC81151268253E6006EAC0A /* MusicTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

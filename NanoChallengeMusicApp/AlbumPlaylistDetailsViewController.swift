@@ -46,11 +46,14 @@ class AlbumPlaylistDetailsViewController: UIViewController, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "librarySong-cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "music-cell", for: indexPath) as! MusicTableViewCell
         
-        cell.textLabel?.text = musicColection?.musics[indexPath.row].title
-        cell.detailTextLabel?.text = musicColection?.musics[indexPath.row].artist
-
+        cell.TitleLabel?.text = musicColection?.musics[indexPath.row].title
+        cell.SubtitleLabel?.text = musicColection?.musics[indexPath.row].artist
+        cell.MusicImageView?.image = UIImage(named: "\(musicColection?.musics[indexPath.row].id ?? "") ")
+        //print(musicColection?.musics[indexPath.row].id)
+        
+        
         return cell
     }
     

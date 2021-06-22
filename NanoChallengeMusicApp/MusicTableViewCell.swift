@@ -9,12 +9,11 @@ import UIKit
 
 class MusicTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var MusicImageView: UIImageView!
-    @IBOutlet weak var TitleLabel: UILabel!
-    @IBOutlet weak var SubtitleLabel: UILabel!
+    @IBOutlet weak var musicImageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var subtitleLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 }

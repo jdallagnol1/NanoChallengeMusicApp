@@ -44,7 +44,7 @@ class LibraryViewController: UIViewController, UITableViewDataSource, UITableVie
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "library-cell", for: indexPath) as! LibrariesTableViewCell
         
-        let typeLibrary = library?[indexPath.row].type.rawValue ?? ""
+        let typeLibrary = library?[indexPath.row].type.rawValue.capitalizingFirstLetter() ?? ""
         let authorLibrary = library?[indexPath.row].mainPerson ?? ""
         
         cell.libraryImageView.image = UIImage(named: "\(library?[indexPath.row].id ?? "")")
@@ -64,4 +64,14 @@ class LibraryViewController: UIViewController, UITableViewDataSource, UITableVie
         albumPlaylistDetailsViewController.musicColection = sender as? MusicCollection
     }
     
+}
+
+extension String {
+    func capitalizingFirstLetter() -> String {
+        return prefix(1).capitalized + dropFirst()
+    }
+
+    mutating func capitalizeFirstLetter() {
+        self = self.capitalizingFirstLetter()
+    }
 }

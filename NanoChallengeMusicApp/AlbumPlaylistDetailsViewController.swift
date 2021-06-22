@@ -16,6 +16,7 @@ class AlbumPlaylistDetailsViewController: UIViewController, UITableViewDataSourc
     @IBOutlet weak var numberOfSongs: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var songsLibraryTableView: UITableView!
+   
     
     var musicColection: MusicCollection?
     
@@ -48,13 +49,24 @@ class AlbumPlaylistDetailsViewController: UIViewController, UITableViewDataSourc
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "music-cell", for: indexPath) as! MusicTableViewCell
         
-        cell.TitleLabel?.text = musicColection?.musics[indexPath.row].title
-        cell.SubtitleLabel?.text = musicColection?.musics[indexPath.row].artist
-        cell.MusicImageView?.image = UIImage(named: "\(musicColection?.musics[indexPath.row].id ?? "") ")
-        //print(musicColection?.musics[indexPath.row].id)
-        
+        cell.titleLabel?.text = musicColection?.musics[indexPath.row].title
+        cell.subtitleLabel?.text = musicColection?.musics[indexPath.row].artist
+        cell.musicImageView?.image = UIImage(named: "\(musicColection?.musics[indexPath.row].id ?? "")")
         
         return cell
     }
     
+    @IBAction func presentDetailsAction(_ sender: Any) {
+        performSegue(withIdentifier: "goToDetails", sender: musicColection)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let aboutView = segue.destination as? AboutLibraryViewController
+        else { return }
+        
+        guard let value = sender as? MusicCollection else { return }
+        
+        aboutView.collection = value
+//
+    }
 }

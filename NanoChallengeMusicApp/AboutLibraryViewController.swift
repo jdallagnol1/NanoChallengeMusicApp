@@ -23,15 +23,17 @@ class AboutLibraryViewController: UIViewController, UITableViewDataSource {
         super.viewDidLoad()
         libraryImageVIew.image = UIImage(named: collection?.id ?? "")
         
-        artistLabel.text = collection?.title
+        albumLabel.text = collection?.title
+        artistLabel.text = collection?.mainPerson
        
         let type = collection?.type.rawValue.capitalizingFirstLetter() ?? ""
         let artist = collection?.mainPerson ?? ""
-        artistLabel.text = "\(type) · \(artist)"
+        artistLabel.text = "\(type) by \(artist)"
         let time = collection?.musics.count ?? 0
         trackAmountLabel.text = "\(time) songs, [tempo do album]"
         //ainda falta formatar a data
-        releaseDateLabel.text = collection?.referenceDate.description
+        let date = collection?.referenceDate.description ?? ""
+        releaseDateLabel.text = "Released in \(date)"
         
         descriptionTableView.dataSource = self
         
@@ -48,12 +50,19 @@ class AboutLibraryViewController: UIViewController, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (indexPath.row == 0) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "about-library-cell") as! LibraryDescriptionTableViewCell
-            
+            cell.libraryDescriptionLabel.text = collection?.albumDescription
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "about-artist-cell") as! ArtistDescriptionTableViewCell
+            let artist = collection?.mainPerson ?? ""
+            cell.aboutArtistLabel.text = "About \(artist)"
+            cell.artistDescriptionLabel.text = collection?.albumArtistDescription
             return cell
         }
-        
     }
+    
+    @IBAction func closeBarButton(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true)
+    }
+    
 }

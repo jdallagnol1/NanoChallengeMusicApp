@@ -35,8 +35,13 @@ class AlbumPlaylistDetailsViewController: UIViewController, UITableViewDataSourc
         navigationItem.title = musicColection?.title
         
         songsLibraryTableView.dataSource = self
+        
+        if musicColection?.type == .playlist {
+            navigationItem.rightBarButtonItem = nil
+        }
 
     }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

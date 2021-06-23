@@ -9,9 +9,10 @@ import UIKit
 
 class LibraryDescriptionTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var libraryDescriptionLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
 }

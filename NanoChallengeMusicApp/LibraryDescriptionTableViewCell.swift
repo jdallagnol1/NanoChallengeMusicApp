@@ -14,5 +14,6 @@ class LibraryDescriptionTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
     }
+    
 
 }

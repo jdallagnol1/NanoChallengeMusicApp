@@ -9,7 +9,6 @@ import UIKit
 
 class AboutLibraryViewController: UIViewController, UITableViewDataSource {
     
-
     @IBOutlet weak var libraryImageVIew: UIImageView!
     @IBOutlet weak var albumLabel: UILabel!
     @IBOutlet weak var artistLabel: UILabel!

@@ -7,9 +7,8 @@
 
 import UIKit
 
-class AlbumPlaylistDetailsViewController: UIViewController, UITableViewDataSource {
+class AlbumPlaylistDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-
     @IBOutlet weak var libraryImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var mainPersonLabol: UILabel!
@@ -35,6 +34,7 @@ class AlbumPlaylistDetailsViewController: UIViewController, UITableViewDataSourc
         navigationItem.title = musicColection?.title
         
         songsLibraryTableView.dataSource = self
+        songsLibraryTableView.delegate = self
         
         if musicColection?.type == .playlist {
             navigationItem.rightBarButtonItem = nil
@@ -61,17 +61,28 @@ class AlbumPlaylistDetailsViewController: UIViewController, UITableViewDataSourc
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "fromAboutToPaying", sender: musicColection?.musics[indexPath.row])
+    }
+    
     @IBAction func presentDetailsAction(_ sender: Any) {
         performSegue(withIdentifier: "goToDetails", sender: musicColection)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let aboutView = segue.destination as? AboutLibraryViewController
-        else { return }
-        
-        guard let value = sender as? MusicCollection else { return }
-        
-        aboutView.collection = value
-//
+        if segue.identifier == "goToDetails" {
+            guard let aboutView = segue.destination as? AboutLibraryViewController
+            else { return }
+            
+            guard let value = sender as? MusicCollection else { return }
+            
+            aboutView.collection = value
+        } else if segue.identifier == "fromAboutToPaying" {
+
+            let playingView = segue.destination as? PlayingViewController
+            let music = sender as? Music
+
+            playingView?.music = music
+        }
     }
 }

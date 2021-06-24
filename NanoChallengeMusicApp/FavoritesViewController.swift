@@ -9,21 +9,14 @@ import UIKit
 
 class FavoritesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
   
-    var service: MusicService?
+    var service: MusicService = MusicService.instance
     var favoriteSongs: [Music]?
  
     @IBOutlet weak var favoritesTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        do {
-            self.service = try MusicService()
-        } catch {
-            print(error)
-        }
-        
-        favoriteSongs = service?.favoriteMusics
+        favoriteSongs = service.favoriteMusics
         
         favoritesTableView.dataSource = self
         favoritesTableView.delegate = self
@@ -34,32 +27,45 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return favoriteSongs?.count ?? 0
+        if favoriteSongs?.count == 0 {
+            return 1
+        }
+        return favoriteSongs?.count ?? 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let music = favoriteSongs?[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "favorite-music-cell", for: indexPath) as! MusicTableViewCell
-        cell.music = music
-        cell.service = service
         
-        cell.titleLabel?.text = music?.title
-        cell.subtitleLabel?.text = music?.artist
-        cell.musicImageView?.image = UIImage(named: "\(music?.id ?? "")")
+        var cell: MusicTableViewCell
         
-        if service?.favoriteMusics.contains(music!) ?? false {
-            cell.favStatusButtonOutlet.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            cell.favStatusButtonOutlet.tintColor = .red
+        if favoriteSongs?.isEmpty ?? true {
+            cell = tableView.dequeueReusableCell(withIdentifier: "empty-favorite-cell", for: indexPath) as! MusicTableViewCell
+            
         } else {
-            cell.favStatusButtonOutlet.setImage(UIImage(systemName: "heart"), for: .normal)
-            cell.favStatusButtonOutlet.tintColor = .black
+            let music = favoriteSongs?[indexPath.row]
+            cell = tableView.dequeueReusableCell(withIdentifier: "favorite-music-cell", for: indexPath) as! MusicTableViewCell
+            cell.music = music
+            cell.service = service
+            cell.titleLabel?.text = music?.title
+            cell.subtitleLabel?.text = music?.artist
+            cell.musicImageView?.image = UIImage(named: "\(music?.id ?? "")")
+            
+            if service.favoriteMusics.contains(music!) {
+                cell.favStatusButtonOutlet.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                cell.favStatusButtonOutlet.tintColor = .red
+            } else {
+                cell.favStatusButtonOutlet.setImage(UIImage(systemName: "heart"), for: .normal)
+                cell.favStatusButtonOutlet.tintColor = .black
+            }
         }
-        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "fromFavoriteToPaying", sender: favoriteSongs?[indexPath.row])
+        if !(favoriteSongs?.isEmpty ?? true) {
+
+            performSegue(withIdentifier: "fromFavoriteToPaying", sender: favoriteSongs?[indexPath.row])
+        }
+
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

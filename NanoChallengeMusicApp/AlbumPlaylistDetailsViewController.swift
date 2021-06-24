@@ -17,18 +17,13 @@ class AlbumPlaylistDetailsViewController: UIViewController, UITableViewDataSourc
     @IBOutlet weak var songsLibraryTableView: UITableView!
    
     
+    var service: MusicService = MusicService.instance
     var musicColection: MusicCollection?
-    var service: MusicService?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        do {
-            self.service = try MusicService()
-        } catch {
-            print(error)
-        }
-        
+
         libraryImageView.image = UIImage(named: "\(musicColection?.id ?? "")")
         titleLabel.text = musicColection?.title
         mainPersonLabol.text = musicColection?.mainPerson
@@ -70,7 +65,7 @@ class AlbumPlaylistDetailsViewController: UIViewController, UITableViewDataSourc
         cell.musicImageView?.image = UIImage(named: "\(music?.id ?? "")")
         
         
-        if service?.favoriteMusics.contains(music!) ?? false {
+        if service.favoriteMusics.contains(music!) {
             cell.favStatusButtonOutlet.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             cell.favStatusButtonOutlet.tintColor = .red
         } else {

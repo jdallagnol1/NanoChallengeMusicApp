@@ -12,22 +12,16 @@ class LibraryViewController: UIViewController, UITableViewDataSource, UITableVie
     
     @IBOutlet weak var libraryTableView: UITableView!
     
-    var service: MusicService?
-    var library: [MusicCollection]?
+    var service: MusicService = MusicService.instance
+    var library: [MusicCollection]? //conferir esse detalhe
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         libraryTableView.dataSource = self
         libraryTableView.delegate = self
-        
-        do {
-            self.service = try MusicService()
-            self.library = service?.loadLibrary()
-        } catch {
-            print(error)
-        }
-        
+        self.library = service.loadLibrary()
+    
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         // Do any additional setup after loading the view.
     }

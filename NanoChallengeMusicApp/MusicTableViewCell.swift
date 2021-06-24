@@ -14,14 +14,14 @@ class MusicTableViewCell: UITableViewCell {
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var favStatusButtonOutlet: UIButton!
     
-    var service: MusicService?
+    var service: MusicService = MusicService.instance
     var music: Music?
     
     @IBAction func favButtonAction(_ sender: UIButton) {
         
-        service?.toggleFavorite(music: music!, isFavorite: service?.favoriteMusics.contains(music!) ?? false)
+        service.toggleFavorite(music: music!, isFavorite: !service.favoriteMusics.contains(music!))
         
-        if service?.favoriteMusics.contains(music!) ?? false {
+        if service.favoriteMusics.contains(music!) {
             favStatusButtonOutlet.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             favStatusButtonOutlet.tintColor = .red
         } else {

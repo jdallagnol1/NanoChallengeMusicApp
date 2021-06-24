@@ -15,22 +15,16 @@ class PlayingViewController: UIViewController {
     @IBOutlet weak var favoriteStatusButton: UIButton!
     
     var music: Music?
-    var service: MusicService?
+    var service: MusicService = MusicService.instance
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
-        do {
-            self.service = try MusicService()
-        } catch {
-            print(error)
-        }
         
-        musicImageView.image = service?.getCoverImage(forItemIded: music?.id ?? "")
+        musicImageView.image = service.getCoverImage(forItemIded: music?.id ?? "")
         nameMusicLabel.text = music?.title
         nameArtistLabel.text = music?.artist
         
-        if service?.favoriteMusics.contains(music!) ?? false {
+        if service.favoriteMusics.contains(music!) {
             favoriteStatusButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             favoriteStatusButton.tintColor = .red
         } else {
@@ -41,9 +35,9 @@ class PlayingViewController: UIViewController {
     }
     
     @IBAction func favoriteButton(_ sender: UIButton) {
-        service?.toggleFavorite(music: music!, isFavorite: service?.favoriteMusics.contains(music!) ?? false)
+        service.toggleFavorite(music: music!, isFavorite: service.favoriteMusics.contains(music!))
         
-        if service?.favoriteMusics.contains(music!) ?? false {
+        if service.favoriteMusics.contains(music!) {
             favoriteStatusButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             favoriteStatusButton.tintColor = .red
         } else {

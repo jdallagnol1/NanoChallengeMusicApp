@@ -18,9 +18,16 @@ class AlbumPlaylistDetailsViewController: UIViewController, UITableViewDataSourc
    
     
     var musicColection: MusicCollection?
+    var service: MusicService?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        do {
+            self.service = try MusicService()
+        } catch {
+            print(error)
+        }
         
         libraryImageView.image = UIImage(named: "\(musicColection?.id ?? "")")
         titleLabel.text = musicColection?.title
@@ -50,13 +57,26 @@ class AlbumPlaylistDetailsViewController: UIViewController, UITableViewDataSourc
         return musicColection?.musics.count ?? 0
     }
     
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+   
+        let music = musicColection?.musics[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "music-cell", for: indexPath) as! MusicTableViewCell
+        cell.music = music
+        cell.service = service
         
-        cell.titleLabel?.text = musicColection?.musics[indexPath.row].title
-        cell.subtitleLabel?.text = musicColection?.musics[indexPath.row].artist
-        cell.musicImageView?.image = UIImage(named: "\(musicColection?.musics[indexPath.row].id ?? "")")
+        cell.titleLabel?.text = music?.title
+        cell.subtitleLabel?.text = music?.artist
+        cell.musicImageView?.image = UIImage(named: "\(music?.id ?? "")")
+        
+        
+        if service?.favoriteMusics.contains(music!) ?? false {
+            cell.favStatusButtonOutlet.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            cell.favStatusButtonOutlet.tintColor = .red
+        } else {
+            cell.favStatusButtonOutlet.setImage(UIImage(systemName: "heart"), for: .normal)
+            cell.favStatusButtonOutlet.tintColor = .black
+        }
         
         return cell
     }

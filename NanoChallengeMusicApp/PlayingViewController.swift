@@ -36,7 +36,6 @@ class PlayingViewController: UIViewController {
         } else {
             favoriteStatusButton.setImage(UIImage(systemName: "heart"), for: .normal)
             favoriteStatusButton.tintColor = .none
-
         }
         
     }

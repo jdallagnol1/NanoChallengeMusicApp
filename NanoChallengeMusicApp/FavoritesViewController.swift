@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FavoritesViewController: UIViewController, UITableViewDataSource {
+class FavoritesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
   
     var service: MusicService?
     var favoriteSongs: [Music]?
@@ -26,6 +26,7 @@ class FavoritesViewController: UIViewController, UITableViewDataSource {
         favoriteSongs = service?.favoriteMusics
         
         favoritesTableView.dataSource = self
+        favoritesTableView.delegate = self
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -56,5 +57,21 @@ class FavoritesViewController: UIViewController, UITableViewDataSource {
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "fromFavoriteToPaying", sender: favoriteSongs?[indexPath.row])
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "fromFavoriteToPaying" {
+
+            let playingView = segue.destination as? PlayingViewController
+            let music = sender as? Music
+
+            playingView?.music = music
+        }
+    }
+    
+    
     
 }

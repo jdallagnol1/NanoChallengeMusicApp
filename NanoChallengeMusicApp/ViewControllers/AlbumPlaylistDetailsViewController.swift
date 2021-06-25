@@ -16,29 +16,38 @@ class AlbumPlaylistDetailsViewController: UIViewController, UITableViewDataSourc
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var songsLibraryTableView: UITableView!
    
-    
     var service: MusicService = MusicService.instance
-    var musicColection: MusicCollection?
+    var musicColection: MusicCollection!
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        libraryImageView.image = UIImage(named: "\(musicColection?.id ?? "")")
-        titleLabel.text = musicColection?.title
-        mainPersonLabol.text = musicColection?.mainPerson
+        libraryImageView.image = service.getCoverImage(forItemIded: musicColection.id )
+        titleLabel.text = musicColection.title
         
-        let numSongs = musicColection?.musics.count ?? 0
+        let type = musicColection.type
+        mainPersonLabol.text = type.rawValue.capitalizingFirstLetter() + " by " + musicColection.mainPerson
+        
+        let numSongs = musicColection.musics.count
         numberOfSongs.text =  "\(numSongs) songs"
         
-        dateLabel.text = musicColection?.referenceDate.description
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM dd, yyyy"
         
-        navigationItem.title = musicColection?.title
+        let date = dateFormatter.string(from: musicColection.referenceDate)
+
+        if type == .album {
+            dateLabel.text = "Released " + date
+        } else if type == .playlist {
+            dateLabel.text = "Created " + date
+        }
+        
+        navigationItem.title = musicColection.title
         
         songsLibraryTableView.dataSource = self
         songsLibraryTableView.delegate = self
         
-        if musicColection?.type == .playlist {
+        if musicColection.type == .playlist {
             navigationItem.rightBarButtonItem = nil
         }
 
@@ -49,35 +58,34 @@ class AlbumPlaylistDetailsViewController: UIViewController, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return musicColection?.musics.count ?? 0
+        return musicColection.musics.count
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
    
-        let music = musicColection?.musics[indexPath.row]
+        let music = musicColection.musics[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "music-cell", for: indexPath) as! MusicTableViewCell
         cell.music = music
-        cell.service = service
         
-        cell.titleLabel?.text = music?.title
-        cell.subtitleLabel?.text = music?.artist
-        cell.musicImageView?.image = UIImage(named: "\(music?.id ?? "")")
+        cell.titleLabel.text = music.title
+        cell.subtitleLabel.text = music.artist
+        cell.musicImageView.image = service.getCoverImage(forItemIded: music.id)
         
-        
-        if service.favoriteMusics.contains(music!) {
+        if service.favoriteMusics.contains(music) {
             cell.favStatusButtonOutlet.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             cell.favStatusButtonOutlet.tintColor = .red
         } else {
             cell.favStatusButtonOutlet.setImage(UIImage(systemName: "heart"), for: .normal)
-            cell.favStatusButtonOutlet.tintColor = .black
+            cell.favStatusButtonOutlet.tintColor = .none
         }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "fromAboutToPaying", sender: musicColection?.musics[indexPath.row])
+        service.startPlaying(collection: musicColection, music: musicColection.musics[indexPath.row])
+        performSegue(withIdentifier: "fromAboutToPaying", sender: nil)
     }
     
     @IBAction func presentDetailsAction(_ sender: Any) {
@@ -92,12 +100,6 @@ class AlbumPlaylistDetailsViewController: UIViewController, UITableViewDataSourc
             guard let value = sender as? MusicCollection else { return }
             
             aboutView.collection = value
-        } else if segue.identifier == "fromAboutToPaying" {
-
-            let playingView = segue.destination as? PlayingViewController
-            let music = sender as? Music
-
-            playingView?.music = music
         }
     }
 }

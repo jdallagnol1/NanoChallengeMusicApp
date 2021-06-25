@@ -148,19 +148,20 @@ final class MusicService {
     
     // MARK: Playing/Queue
     
-    func startPlaying(collection: MusicCollection) {
+    func startPlaying(collection: MusicCollection, music: Music? = nil) {
         let nonRepeatedMusics = Set(collections.flatMap(\.musics)).subtracting(collection.musics)
         let suggestions = (0..<10).compactMap { _ in nonRepeatedMusics.randomElement() }
         
         queue = Queue(
-            nowPlaying: collection.musics.first,
+            nowPlaying: music ?? collection.musics.first,
             collection: collection,
             nextInCollection: Array(collection.musics.dropFirst()),
             nextSuggested: suggestions)
     }
     
     func startPlaying(music: Music) {
-        queue = Queue(nowPlaying: music, collection: nil, nextInCollection: [], nextSuggested: [])
+        queue = Queue(nowPlaying: music, collection: nil, nextInCollection: favoriteMusics, nextSuggested: [])
+        removeFromQueue(music: music)
     }
     
     func removeFromQueue(music: Music) {

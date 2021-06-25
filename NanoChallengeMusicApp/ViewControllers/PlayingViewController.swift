@@ -14,30 +14,32 @@ class PlayingViewController: UIViewController {
     @IBOutlet weak var nameArtistLabel: UILabel!
     @IBOutlet weak var favoriteStatusButton: UIButton!
     
-    var music: Music?
+    var music: Music!
     var service: MusicService = MusicService.instance
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        musicImageView.image = service.getCoverImage(forItemIded: music?.id ?? "")
-        nameMusicLabel.text = music?.title
-        nameArtistLabel.text = music?.artist
+        music = service.queue.nowPlaying
         
-        if service.favoriteMusics.contains(music!) {
+        musicImageView.image = service.getCoverImage(forItemIded: music.id)
+        nameMusicLabel.text = music.title
+        nameArtistLabel.text = music.artist
+        
+        if service.favoriteMusics.contains(music) {
             favoriteStatusButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             favoriteStatusButton.tintColor = .red
         } else {
             favoriteStatusButton.setImage(UIImage(systemName: "heart"), for: .normal)
             favoriteStatusButton.tintColor = .none
         }
-        
+                
     }
     
     @IBAction func favoriteButton(_ sender: UIButton) {
-        service.toggleFavorite(music: music!, isFavorite: service.favoriteMusics.contains(music!))
+        service.toggleFavorite(music: music, isFavorite: !service.favoriteMusics.contains(music))
         
-        if service.favoriteMusics.contains(music!) {
+        if service.favoriteMusics.contains(music) {
             favoriteStatusButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             favoriteStatusButton.tintColor = .red
         } else {
@@ -45,5 +47,10 @@ class PlayingViewController: UIViewController {
             favoriteStatusButton.tintColor = .none
         }
     }
-
+    
+    
+    @IBAction func queueButton(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "goToQueue", sender: nil)
+    }
+    
 }

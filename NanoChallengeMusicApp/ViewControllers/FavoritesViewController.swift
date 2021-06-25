@@ -68,4 +68,19 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "fromFavoriteToPaying" {
+            guard let playing = segue.destination as? PlayingViewController
+            else { return }
+                        
+            playing.presentationController?.delegate = self
+        }
+    }
+    
+}
+
+extension FavoritesViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+        favoritesTableView.reloadData()
+    }
 }

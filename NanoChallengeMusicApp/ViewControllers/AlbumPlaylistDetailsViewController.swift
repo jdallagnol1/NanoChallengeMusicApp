@@ -100,6 +100,17 @@ class AlbumPlaylistDetailsViewController: UIViewController, UITableViewDataSourc
             guard let value = sender as? MusicCollection else { return }
             
             aboutView.collection = value
+        } else if segue.identifier == "fromAboutToPaying" {
+            guard let playing = segue.destination as? PlayingViewController
+            else { return }
+                        
+            playing.presentationController?.delegate = self
         }
+    }
+}
+
+extension AlbumPlaylistDetailsViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+        songsLibraryTableView.reloadData()
     }
 }

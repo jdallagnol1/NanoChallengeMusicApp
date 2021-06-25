@@ -99,10 +99,17 @@ class QueueViewController: UIViewController, UITableViewDataSource, UITableViewD
 //        }
 //
 //        self.dismiss(animated: true)
+        print("CLICADO")
     }
     
     @IBAction func closeQueueButton(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true)
     }
     
+}
+
+extension QueueViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+        queueTableView.reloadData()
+    }
 }

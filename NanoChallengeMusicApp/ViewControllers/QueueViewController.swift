@@ -7,7 +7,7 @@
 
 import UIKit
 
-class QueueViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class QueueViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIAdaptivePresentationControllerDelegate {
     
     @IBOutlet weak var queueTableView: UITableView!
     
@@ -105,10 +105,8 @@ class QueueViewController: UIViewController, UITableViewDataSource, UITableViewD
         self.dismiss(animated: true)
     }
     
-}
-
-extension QueueViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
         queueTableView.reloadData()
     }
+    
 }

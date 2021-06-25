@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AlbumPlaylistDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class AlbumPlaylistDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIAdaptivePresentationControllerDelegate {
     
     @IBOutlet weak var libraryImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -39,7 +39,7 @@ class AlbumPlaylistDetailsViewController: UIViewController, UITableViewDataSourc
         if type == .album {
             dateLabel.text = "Released " + date
         } else if type == .playlist {
-            dateLabel.text = "Created " + date
+            dateLabel.text = "Created "  + date
         }
         
         navigationItem.title = musicColection.title
@@ -107,10 +107,9 @@ class AlbumPlaylistDetailsViewController: UIViewController, UITableViewDataSourc
             playing.presentationController?.delegate = self
         }
     }
-}
-
-extension AlbumPlaylistDetailsViewController: UIAdaptivePresentationControllerDelegate {
+    
     func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
         songsLibraryTableView.reloadData()
     }
+    
 }

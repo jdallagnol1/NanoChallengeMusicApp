@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FavoritesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class FavoritesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIAdaptivePresentationControllerDelegate {
   
     var service: MusicService = MusicService.instance
     var favoriteSongs: [Music]?
@@ -20,6 +20,12 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
         
         favoritesTableView.dataSource = self
         favoritesTableView.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        //viewDidLoad()
+        favoriteSongs = service.favoriteMusics
+        favoritesTableView.reloadData()
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -77,10 +83,8 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-}
-
-extension FavoritesViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
         favoritesTableView.reloadData()
     }
+    
 }

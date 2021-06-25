@@ -32,7 +32,17 @@ class AboutLibraryViewController: UIViewController, UITableViewDataSource {
         artistLabel.text = type + " by " + artist
         
         let time = collection.musics.count.description
-        trackAmountLabel.text = time + " songs, [tempo do album]"
+        
+        var contTime: TimeInterval? = nil
+        for music in collection.musics {
+            if contTime == nil {
+                contTime = music.length
+            } else {
+                contTime! += music.length
+            }
+        }
+        
+        trackAmountLabel.text = time + " songs, " + contTime!.stringFromTimeInterval()
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM dd, yyyy"

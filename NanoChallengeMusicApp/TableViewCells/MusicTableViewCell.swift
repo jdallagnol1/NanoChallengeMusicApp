@@ -28,6 +28,7 @@ class MusicTableViewCell: UITableViewCell {
             favStatusButtonOutlet.setImage(UIImage(systemName: "heart"), for: .normal)
             favStatusButtonOutlet.tintColor = .none
         }
+
     }
     
     override func awakeFromNib() {

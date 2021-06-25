@@ -39,15 +39,15 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
         
         if favoriteSongs?.isEmpty ?? true {
             cell = tableView.dequeueReusableCell(withIdentifier: "empty-favorite-cell", for: indexPath) as! MusicTableViewCell
-            
         } else {
-            let music = favoriteSongs?[indexPath.row]
             cell = tableView.dequeueReusableCell(withIdentifier: "favorite-music-cell", for: indexPath) as! MusicTableViewCell
+            let music = favoriteSongs?[indexPath.row]
+            
             cell.music = music
             cell.service = service
             cell.titleLabel?.text = music?.title
             cell.subtitleLabel?.text = music?.artist
-            cell.musicImageView?.image = UIImage(named: "\(music?.id ?? "")")
+            cell.musicImageView?.image = service.getCoverImage(forItemIded: music?.id ?? "")
             
             if service.favoriteMusics.contains(music!) {
                 cell.favStatusButtonOutlet.setImage(UIImage(systemName: "heart.fill"), for: .normal)
@@ -57,27 +57,15 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
                 cell.favStatusButtonOutlet.tintColor = .black
             }
         }
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !(favoriteSongs?.isEmpty ?? true) {
-
-            performSegue(withIdentifier: "fromFavoriteToPaying", sender: favoriteSongs?[indexPath.row])
-        }
-
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "fromFavoriteToPaying" {
-
-            let playingView = segue.destination as? PlayingViewController
-            let music = sender as? Music
-
-            playingView?.music = music
+            service.startPlaying(music: favoriteSongs![indexPath.row])
+            performSegue(withIdentifier: "fromFavoriteToPaying", sender: favoriteSongs![indexPath.row])
         }
     }
-    
-    
     
 }

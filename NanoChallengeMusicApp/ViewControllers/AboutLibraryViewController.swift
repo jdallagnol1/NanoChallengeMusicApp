@@ -16,26 +16,31 @@ class AboutLibraryViewController: UIViewController, UITableViewDataSource {
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var descriptionTableView: UITableView!
     
-    var collection: MusicCollection?
-    
+    var collection: MusicCollection!
+    var service: MusicService = MusicService.instance
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        libraryImageVIew.image = UIImage(named: collection?.id ?? "")
         
-        albumLabel.text = collection?.title
-        artistLabel.text = collection?.mainPerson
+        libraryImageVIew.image = service.getCoverImage(forItemIded: collection.id)
+        
+        albumLabel.text = collection.title
+        artistLabel.text = "Album by " + collection.mainPerson
        
-        let type = collection?.type.rawValue.capitalizingFirstLetter() ?? ""
-        let artist = collection?.mainPerson ?? ""
-        artistLabel.text = "\(type) by \(artist)"
-        let time = collection?.musics.count ?? 0
-        trackAmountLabel.text = "\(time) songs, [tempo do album]"
-        //ainda falta formatar a data
-        let date = collection?.referenceDate.description ?? ""
-        releaseDateLabel.text = "Released in \(date)"
+        let type = collection.type.rawValue.capitalizingFirstLetter()
+        let artist = collection.mainPerson
+        artistLabel.text = type + " by " + artist
+        
+        let time = collection.musics.count.description
+        trackAmountLabel.text = time + " songs, [tempo do album]"
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM dd, yyyy"
+
+        let date = dateFormatter.string(from: collection.referenceDate)
+        releaseDateLabel.text = "Released in " + date
         
         descriptionTableView.dataSource = self
-        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -49,13 +54,13 @@ class AboutLibraryViewController: UIViewController, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (indexPath.row == 0) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "about-library-cell") as! LibraryDescriptionTableViewCell
-            cell.libraryDescriptionLabel.text = collection?.albumDescription
+            cell.libraryDescriptionLabel.text = collection.albumDescription
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "about-artist-cell") as! ArtistDescriptionTableViewCell
-            let artist = collection?.mainPerson ?? ""
-            cell.aboutArtistLabel.text = "About \(artist)"
-            cell.artistDescriptionLabel.text = collection?.albumArtistDescription
+            let artist = collection.mainPerson
+            cell.aboutArtistLabel.text = "About " + artist
+            cell.artistDescriptionLabel.text = collection.albumArtistDescription
             return cell
         }
     }

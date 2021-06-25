@@ -82,24 +82,23 @@ class QueueViewController: UIViewController, UITableViewDataSource, UITableViewD
     // PQ NÃO TÁ PEGANDO O CLIQUE?
     // MODIFIQUEI O MÉTODO startPlaying NA CLASSE DO RARA PRA PLAYING SEGUIR O QUE ESTÁ NO service.queue.nowPlaying MANDANDO A MUSIC
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        var music: Music!
-//        
-//        if indexPath.section == 0 {
-//            self.dismiss(animated: true)
-//        } else if indexPath.section == 1 {
-//            music = service.queue.nextInCollection[indexPath.row]
-//        } else if indexPath.section == 2 {
-//            music = service.queue.nextSuggested[indexPath.row]
-//        }
-//        
-//        if service.queue.collection != nil {
-//            service.startPlaying(collection: service.queue.collection!, music: music)
-//        } else {
-//            service.startPlaying(music: music)
-//        }
-//
-//        self.dismiss(animated: true)
-        print("CLICADO")
+        var music: Music!
+        
+        if indexPath.section == 0 {
+            self.dismiss(animated: true)
+        } else if indexPath.section == 1 {
+            music = service.queue.nextInCollection[indexPath.row]
+        } else if indexPath.section == 2 {
+            music = service.queue.nextSuggested[indexPath.row]
+        }
+        
+        if service.queue.collection != nil {
+            service.startPlaying(collection: service.queue.collection!, music: music)
+        } else {
+            service.startPlaying(music: music)
+        }
+
+        self.dismiss(animated: true)
     }
     
     @IBAction func closeQueueButton(_ sender: UIBarButtonItem) {
